@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Catnap | منتجات العناية بالأطفال — كريم الحفاض، شامبو، مناديل ولوشن</title>
 <meta name="description" content="منتجات Catnap للعناية بالطفل: كريم الحفاض، شامبو الأطفال، المناديل المبللة واللوشن. تركيبات لطيفة وآمنة، شحن لكل محافظات مصر والدفع عند الاستلام.">
+<meta name="google-site-verification" content="cmkMVFaOQtjpNzdx1gVKJqtNHnH6F_uyQyZR1HhnGpo" />
 <meta name="theme-color" content="#FBF7F2">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Catnap">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta property="og:site_name" content="Catnap">
 <meta property="og:locale" content="ar_EG">
 <meta property="og:type" content="website">
@@ -813,6 +820,21 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
 .pdp > *, .shop-layout > *, .checkout > *, .cart-page > *, .account > * { min-width: 0; }
 @media (max-width: 640px) { .pdp-buy .btn-lg { white-space: normal; line-height: 1.3; } .pdp-buy .btn [lang="en"] { display: none; } }
 .radio, .check { flex-direction: row; margin-bottom: 6px; font-weight: 400; }
+/* app install bar + standalone (installed app) tweaks */
+.install-bar { position: fixed; z-index: 60; bottom: 20px; inset-inline-start: 20px; width: min(420px, calc(100vw - 40px)); background: #fff; border-radius: 20px; box-shadow: var(--shadow-lg); padding: 12px 14px; display: flex; align-items: center; gap: 12px; animation: toast-in .4s var(--ease); }
+.install-bar img { border-radius: 12px; }
+.install-bar span { flex: 1; display: flex; flex-direction: column; line-height: 1.35; font-size: .9rem; }
+.install-bar small { color: var(--ink-2); }
+@media (max-width: 900px) { .install-bar { bottom: calc(76px + env(safe-area-inset-bottom)); inset-inline: 12px; width: auto; } }
+@media (display-mode: standalone) {
+  .announce { display: none; }
+  .site-header { padding-top: env(safe-area-inset-top); }
+  body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
+}
+.native .announce, .native .whatsapp-fab span { display: none; }
+.native .site-header { padding-top: env(safe-area-inset-top); }
+.native body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
+@media (max-width: 900px) { body.page-product .toast { bottom: calc(150px + env(safe-area-inset-bottom)); } }
 
 </style>
 </head>
@@ -909,6 +931,12 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
 <div class="modal" id="quickView" hidden role="dialog" aria-modal="true" aria-label="عرض سريع"><div class="modal-card"><button class="icon-btn modal-close" data-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div data-qv-body></div></div></div>
 <div class="overlay" id="overlay" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="install-bar" id="installBar" hidden>
+  <img src="icons/icon-192.png" alt="" width="44" height="44">
+  <span><strong>ثبّتي تطبيق Catnap</strong><small data-install-hint>تسوّق أسرع ويفتح من غير نت</small></span>
+  <button class="btn btn-dark btn-sm" data-install>تثبيت</button>
+  <button class="icon-btn" data-install-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
 
 <a class="whatsapp-fab" href="https://wa.me/201000000000" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب"><svg viewBox="0 0 32 32"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.4 14.6 14.6 0 0 0 5.6 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.1-.3-.2-.6-.4z"/></svg><span>واتساب</span></a>
 
@@ -1031,6 +1059,9 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
         <div class="cp-foot">${priceHtml(p)}${p.stock > 0 ? `<button class="btn btn-dark btn-sm add-btn" data-add="${p.id}">${ICON.plus}<span>أضف للسلة</span></button>` : '<span class="muted small">غير متوفر</span>'}</div>
       </div></article>`;
   }
+  const isNative = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+  if (isNative) document.documentElement.classList.add("native");
+  function openExternal(url) { if (isNative) location.href = url; else window.open(url, "_blank", "noopener"); }
   const lines = (t) => String(t || "").split("\n").map((x) => x.trim()).filter(Boolean);
   function markup(text) {
     const out = []; let ul = [];
@@ -1408,7 +1439,7 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
       case "page": html = pages.page(seg[1]); break;
       default: html = pages.notFound();
     }
-    close();
+    close(); $("#toast").hidden = true;
     $("#main").innerHTML = html;
     document.body.classList.toggle("page-product", seg[0] === "product");
     $$(".main-nav a, .mobile-tabbar a").forEach((a) => {
@@ -1484,15 +1515,15 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
         if (f.remember) store.set("address", { name: order.name, phone: order.phone, email: order.email, governorate: order.governorate, city: order.city, address: order.address });
         store.set("orders", [...store.get("orders", []), order]);
         cart = {}; coupon = null; store.set("coupon", null); saveCart();
-        window.open(waOrderLink(order), "_blank", "noopener");
         location.hash = `#/order/${order.number}`;
+        openExternal(waOrderLink(order));
       });
     }
     // contact
     $("[data-contact-form]")?.addEventListener("submit", (e) => {
       e.preventDefault(); const f = Object.fromEntries(new FormData(e.target));
       if (!f.name.trim() || !f.message.trim()) { toast("من فضلك اكتبي الاسم والرسالة", true); return; }
-      window.open(`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(`${f.subject}\nالاسم: ${f.name}${f.phone ? "\nالموبايل: " + f.phone : ""}\n\n${f.message}`)}`, "_blank", "noopener");
+      openExternal(`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(`${f.subject}\nالاسم: ${f.name}${f.phone ? "\nالموبايل: " + f.phone : ""}\n\n${f.message}`)}`);
     });
   }
 
@@ -1596,6 +1627,27 @@ legend { font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; displa
   const header = $("#siteHeader");
   window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 8), { passive: true });
   window.addEventListener("hashchange", route);
+  // ------------------------------------------------------------------ PWA: offline + install
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !isNative) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+  const bar = $("#installBar");
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  const dismissed = store.get("install_dismissed", 0) > Date.now() - 7 * 864e5;
+  let deferred = null;
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (!dismissed && !standalone) bar.hidden = false; });
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIOS && !standalone && !dismissed && !isNative && location.protocol.startsWith("http")) {
+    setTimeout(() => { $("[data-install-hint]").textContent = "اضغطي زر المشاركة ⬆︎ ثم «إضافة إلى الشاشة الرئيسية»"; $("[data-install]").textContent = "إزاي؟"; bar.hidden = false; }, 2500);
+  }
+  bar.addEventListener("click", async (e) => {
+    if (e.target.closest("[data-install-close]")) { bar.hidden = true; store.set("install_dismissed", Date.now()); return; }
+    if (!e.target.closest("[data-install]")) return;
+    if (deferred) { deferred.prompt(); const r = await deferred.userChoice; deferred = null; bar.hidden = true; if (r.outcome === "accepted") toast("تم تثبيت التطبيق 🎉"); }
+    else if (isIOS) toast("في Safari: اضغطي زر المشاركة ⬆︎ ثم «إضافة إلى الشاشة الرئيسية» ثم «إضافة»");
+  });
+  window.addEventListener("appinstalled", () => { bar.hidden = true; });
+
   bindSearch(); updateBadges(); route();
 })();
 </script>
